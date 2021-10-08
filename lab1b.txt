@@ -1,0 +1,70 @@
+1.Lexic:
+	a.Special symbols, representing:
+		- operators += -= /= *= and or not <= == >= < >
+		- separators [ ] { } ( ) : space
+		- reserved words:
+			if else while int str print input List
+	b.identifiers
+		-a sequence of letters, symbols and  digits, such that the first character is a letter; the rule is:
+			identifier = letter | letter{(letter | digit)}
+			letter = "A" | "B" | . ..| "Z"
+			digit = "0" | "1" |...| "9"
+			symbol = "," | "." | ... | "?"
+	c.constants
+		1.integer - rule:
+			constant_int = (["-"]("1"|...|"9"){digit}) | "0"
+		3.string
+			constant_string = """{(letter | digit | symbol)}"""
+
+2. Tokens:
+	+=
+	-=
+	*=
+	/=
+	=
+	<
+	>
+	==
+	>=
+	<=
+	and
+	or
+	not
+	if
+	else
+	while
+	int
+	List
+	str
+	print
+	input
+	[
+	]
+	{
+	}
+	(
+	)
+	:
+	
+
+3. Syntax:
+	Sintactical rules:
+
+	program = compstmt
+	cmpdstmt = stmt"\n" | stmt"\n"{stmt"\n"}
+	stmt = simplstmt | structstmt
+	simplstmt = assignstmt | declstmt | printstmt
+	printstmt = "print(" expression ")"
+	declstmt = identifier ":" type "=" expression
+	assignstm = identifier "=" expression
+	type = "int" | "str" | "List"
+	listexpression = "[" (identifier | expression) {","(identifier | expression)} "]"
+	expression = readexpression | listexpression | constantexpression | IDENTIFIER
+	readexpression = "input()"
+	constantexpression = constant_int | constant_string
+	structstmt = cmpdstmt | whilestmt | ifstmt
+	ifstmt = "if" condition ":\n" cmpdstmt ["else:\n" cmpdstmt]
+	whilestmt = "while" condition ":\n" cmpdstmt
+	condition = ["not"] expression RELATION expression
+	RELATION = "<" | "<=" | "==" | ">=" | ">"
+
