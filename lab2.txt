@@ -1,0 +1,34 @@
+Documentation:
+
+    Method chosen:
+        Binary search tree, alphabetical sorting, no rebalance
+
+    Classes:
+        Element: 
+            key: any
+            value: any
+        
+        Node: 
+            element: Element
+            left: Node
+            right: Node
+        
+        SymbolTable:
+            base: Node
+            next_index: int, 0
+
+            position: callable(item: any)
+                adds the item to the symbol table, if exists, return the previously given value
+
+    Explanation:
+        if base is None:
+            add a new node, with the item inside it,
+            give it the next index (increment index afterwards)
+
+        node = base
+        while node key != item:
+            if item < left: go left
+            else: go right
+            if direction does not exist: add new node with item there
+            give it the next index (increment index afterwards)
+        if while ends: return current node key
