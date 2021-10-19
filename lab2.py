@@ -56,30 +56,3 @@ class SymbolTable():
         # found it
         return node.element.value
 
-
-        
-stI = SymbolTable()
-print(stI.position("c"))
-print(stI.position("a"))
-print(stI.position("d"))
-print(stI.position("b"))
-print(stI.position("e"))
-print(stI.position("c"))
-print(stI.position("a"))
-print(stI.position("d"))
-print(stI.position("b"))
-print(stI.position("e"))
-
-print()
-
-stC = SymbolTable()
-print(stC.position("1"))
-print(stC.position("2"))
-print(stC.position("dasd"))
-print(stC.position("b12"))
-print(stC.position("ez"))
-print(stC.position("1"))
-print(stC.position("2"))
-print(stC.position("dasd"))
-print(stC.position("b12"))
-print(stC.position("ez"))
