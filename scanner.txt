@@ -1,0 +1,15 @@
+the scanner separates the file into lines and the lines into words
+using the separate function which preserves separators (ignores spaces)
+and ignores separators inside "quotation mark pairs"
+
+each word is checked if it is a reserved word, than if it matches the identifier pattern
+and lastly if it matches constant patterns. In case no match was found we print it as a
+lexical error and terminate the process
+
+pif is a simple list, identifiers and constants stored separately in binary trees
+
+it has 3 regex patterns:
+
+identifier: ^[a-zA-Z]+[a-zA-z0-9]*$
+integer: ^[1-9][0-9]+$|^[0-9]$
+string: ^\".*\"$

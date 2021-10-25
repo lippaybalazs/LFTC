@@ -5,11 +5,27 @@ class Element():
         self.key = key
         self.value = value
 
+    def __str__(self):
+        return str(self.key) + ": " + str(self.value)
+
 class Node:
     def __init__(self, element: Element, left, right):
         self.element = element
         self.left = left
         self.right = right
+
+    def __str__(self):
+        whole = ""
+        left = str(self.left)
+        if left != "None":
+            whole += left + "\n"
+        whole += str(self.element) + "\n"
+        right = str(self.right)
+        if right != "None":
+            whole += right + "\n"
+        return whole
+        
+
 
 class SymbolTable():
     
@@ -56,3 +72,7 @@ class SymbolTable():
         # found it
         return node.element.value
 
+    def __str__(self):
+        if self.base is None:
+            return "[]"
+        return "[\n" + str(self.base) + "]"
