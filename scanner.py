@@ -92,9 +92,15 @@ for line in lines:
         exit()
 print("lexically correct")
 
+print()
+print("pif")
+print("[")
 for item in pif:
     print(str(item[0]) + ": " + str(item[1]))
+print("]")
 print()
+print("constants")
 print(constants)
 print()
+print("identifiers")
 print(identifiers)

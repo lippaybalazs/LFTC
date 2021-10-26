@@ -1,9 +1,9 @@
 print("minimum of 3")
-a = int(input())
-b = int(input())
-c = int(input())
+a:int = int(input())
+b:int = int(input())
+c:int = int(input())
 
-m = a
+m:int = a
 if b < m :
     m = b
 if c < m :

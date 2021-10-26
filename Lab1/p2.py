@@ -1,10 +1,10 @@
 print("Prime checker")
-x = int(input())
+x:int = int(input())
 
 if x <= 1:
     print("no")
 else:
-    q = x
+    q:int = x
     q %= 2
     if q == 0:
         if x == 2:
@@ -12,9 +12,9 @@ else:
         else:
             print("no")
     else:
-        d = 3
-        f = False
-        dd = d
+        d:int = 3
+        f:bool = False
+        dd:int = d
         dd *= d
         while dd <= x and not f:
             q = x

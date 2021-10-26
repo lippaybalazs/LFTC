@@ -54,20 +54,21 @@
 	cmpdstmt = stmt"\n" | stmt"\n"{stmt"\n"}
 	stmt = simplstmt | structstmt
 	simplstmt = assignstmt | declstmt | printstmt | arithmstmt
-	arithmstmt = IDENTIFIER "+=" | "-=" | "*=" | "/=" expression
+	arithmstmt = IDENTIFIER "+=" | "-=" | "*=" | "/=" | "%=" expression
 	printstmt = "print(" expression ")"
 	declstmt = identifier ":" type "=" expression
 	assignstm = identifier "=" expression
 	type = "int" | "str" | "List"
 	listexpression = "[" (identifier | expression) {","(identifier | expression)} "]"
-	expression = readexpression | listexpression | constantexpression | IDENTIFIER
+	expression = conversionexpression | readexpression | listexpression | constantexpression | IDENTIFIER
 	readexpression = "input()"
+	conversionexpression = "int" | "str" "(" expression ")"
 	constantexpression = constant_int | constant_string
 	structstmt = cmpdstmt | whilestmt | ifstmt
 	ifstmt = "if" condition ":\n" cmpdstmt ["else:\n" cmpdstmt]
 	whilestmt = "while" condition ":\n" cmpdstmt
-	condition = ["not"] expression {RELATION expression}
-	condition = condition {LOGICAL condition}
+	condition = ["not"] expression [RELATION expression]
+	condition = condition [LOGICAL condition]
 	LOGICAL = "and" | "or"
 	RELATION = "<" | "<=" | "==" | ">=" | ">"
 
