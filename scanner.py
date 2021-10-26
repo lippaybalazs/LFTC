@@ -70,7 +70,7 @@ identifiers = SymbolTable()
 
 
 line_nr = 0
-file = "Lab1/p1err.py"
+file = "Lab1/p3.py"
 #file = input()
 lines = open(file,'r').readlines()
 for line in lines:
