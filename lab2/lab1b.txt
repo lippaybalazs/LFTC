@@ -66,8 +66,8 @@
 	structstmt = cmpdstmt | whilestmt | ifstmt
 	ifstmt = "if" condition ":\n" cmpdstmt ["else:\n" cmpdstmt]
 	whilestmt = "while" condition ":\n" cmpdstmt
-	condition = ["not"] expression RELATION expression
-	condition = condition | condition LOGICAL condition
+	condition = ["not"] expression {RELATION expression}
+	condition = condition {LOGICAL condition}
 	LOGICAL = "and" | "or"
 	RELATION = "<" | "<=" | "==" | ">=" | ">"
 
