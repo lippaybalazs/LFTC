@@ -1,0 +1,49 @@
+https://github.com/lippaybalazs/LFTC
+
+FA class:
+    transition representation: 
+        hashmap {
+            key: state_from
+            value: hashmap {
+                key: transition value
+                value: state_to
+            }
+        }
+
+    add_transition:
+        adds a transition to the collection
+
+    get_transitions:
+        converts collection to list and returns it
+
+    check_input_recursive:
+        checks if the input string matches the FA
+
+        exit criteria:
+            if string empty: return if state is end state
+            if state has no transition: false
+            if state has no transition with next character: false
+        recursion:
+            recurse for every transition, accumulate results with OR
+
+    check_input:
+        wrapper for check_input_recursive
+
+
+
+
+FA file format:
+    row 1: state list
+    row 2: character list (alphabet)
+    row 3: start state
+    row 4: end state list
+    row n, n >= 5: "from state" "transition character" "to state"
+
+    EBNF
+    character = "0" | "1" | ... | "9" | "a" | "b" | ... | "z" | "A" | "B" | ... | "." | "," | ... | "_"
+    string = character {character}
+    space = " "
+    new_line = "\n"
+    string_list = string {space string}
+    transition = string space string space string
+    FA = string_list new_line string_list new_lisne string new_line string_list {new_line transition} 
