@@ -85,4 +85,4 @@ while True:
         for transition in fa.get_transitions():
             print(transition[0] + " " + transition[1] + " " + transition[2])
     elif choice == '6':
-        print(fa.check_input(fa.start, input("string>")))
+        print(fa.check_input(input("string>")))
