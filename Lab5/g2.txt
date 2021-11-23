@@ -1,0 +1,62 @@
+program appendstmt delstmt cmpdstmt stmt simplstmt arithmstmt printstmt declstmt assignstm type listexpression1 listexpression2 expression readexpression conversionexpression constantexpression structstmt ifstmt whilestmt condition condition logical relation arithmetic
+identifier constant_int constant_string += -= *= /= = < > == >= <= and or not if else while int List str print input [ ] { } ( ) : \n append del .
+program
+program->compstmt
+cmpdstmt->stmt \n
+cmpdstmt->stmt \n stmt \n
+stmt->simplstmt
+stmt->structstmt
+simplstmt->assignstmt
+simplstmt->declstmt
+simplstmt->printstmt
+simplstmt->arithmstmt
+simplstmt->appendstmt
+simplstmt->delstmt
+delstmt->del identifier [ expression ]
+appendstmt->identifier . append ( expression )
+arithmetic->+=
+arithmetic->-=
+arithmetic->*=
+arithmetic->/=
+arithmetic->%=
+arithmstmt->identifier arithmetic expression
+printstmt->print ( expression )
+declstmt->identifier : type = expression
+assignstm->identifier = expression
+type->int
+type->str
+type->List
+listexpression1->[ ]
+listexpression1->[ expression ]
+listexpression1->[ expression , listexpression2 ]
+listexpression2->expression
+listexpression2->expression , listexpression2
+expression->conversionexpression
+expression->readexpression
+expression->listexpression1
+expression->constantexpression
+expression->identifier
+readexpression->input ( )
+conversionexpression->int ( expression )
+conversionexpression->str ( expression )
+constantexpression->constant_int
+constantexpression->constant_string
+structstmt->cmpdstmt
+structstmt->whilestmt
+structstmt->ifstmt
+ifstmt->if condition : \n cmpdstmt
+ifstmt->if condition : \n cmpdstmt else : \n cmpdstmt
+whilestmt->while condition : \n cmpdstmt
+condition->expression
+condition->not expression
+condition->expression relation expression
+condition->not expression relation expression
+condition->condition
+condition->condition logical condition
+logical->and
+logical->or
+relation-><
+relation-><=
+relation->==
+relation->>=
+relation->>

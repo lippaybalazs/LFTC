@@ -1,0 +1,12 @@
+S A C B
+b a g h d
+S
+S->A C B
+S->C b b
+S->B a
+A->d a
+A->B C
+B->g
+B->Є
+C->h
+C->Є
