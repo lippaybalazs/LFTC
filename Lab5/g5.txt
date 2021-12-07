@@ -1,0 +1,11 @@
+E E' T T' F
+id + * ( )
+E
+E->T E'
+E'->+ T E'
+E'->Є
+T->F T'
+T'->* F T'
+T'->Є
+F->id
+F->( E )

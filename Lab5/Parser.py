@@ -8,26 +8,41 @@ class Parser:
         self.grammar: Grammar = grammar
 
     def first(self, x:str):
-        if x in self.grammar.get_terminals():
-            return [x]
-        productions = self.grammar.get_productions_for(x)
         to_return = []
-        for production in productions:
-            if epsilon == production:
-                to_return.append(epsilon)
-            else:
-                characters = production.split(" ")
-                if len(characters) > 0:
-                    i = 0
-                    while True:
-                        first_x = self.first(characters[i])
-                        i += 1
-                        if epsilon in first_x and i < len(characters):
-                            first_x.remove(epsilon)
-                            to_return.extend(first_x)
-                        else:
-                            to_return.extend(first_x)
-                            break
+        if len(x.split(" ")) > 1:
+            characters = x.split(" ")
+            if len(characters) > 0:
+                i = 0
+                while True:
+                    first_x = self.first(characters[i])
+                    i += 1
+                    if epsilon in first_x and i < len(characters):
+                        first_x.remove(epsilon)
+                        to_return.extend(first_x)
+                    else:
+                        to_return.extend(first_x)
+                        break
+        else:
+            if x in self.grammar.get_terminals():
+                return [x]
+            productions = self.grammar.get_productions_for(x)
+            
+            for production in productions:
+                if epsilon == production:
+                    to_return.append(epsilon)
+                else:
+                    characters = production.split(" ")
+                    if len(characters) > 0:
+                        i = 0
+                        while True:
+                            first_x = self.first(characters[i])
+                            i += 1
+                            if epsilon in first_x and i < len(characters):
+                                first_x.remove(epsilon)
+                                to_return.extend(first_x)
+                            else:
+                                to_return.extend(first_x)
+                                break
         return list(set(to_return))
 
     def follow(self, x:str):
@@ -38,9 +53,10 @@ class Parser:
             characters:list = production[1].split(" ")
             index = characters.index(x)
             if index < len(characters) - 1:
-                first_next = []
+                next_string = ""
                 for char in characters[index + 1:]:
-                    first_next.extend(self.first(char))
+                    next_string += char + " "
+                first_next = self.first(next_string[:-1])
                 first_next = list(set(first_next))
                 if epsilon in first_next:
                     del first_next[first_next.index(epsilon)]
@@ -49,37 +65,45 @@ class Parser:
             else:
                 to_return.extend(self.follow(production[0]))
         return list(set(to_return))
+
+    def get_table(self):
+        table = {}
+        for key in self.grammar.productions.keys():
+            for production in self.grammar.productions[key]:
+                first_value = self.first(production)
+                for terminal in first_value:
+                    if terminal in self.grammar.get_terminals():
+                        if key in table.keys():
+                            if terminal in table[key].keys():
+                                raise Exception("grammar not suitable")
+                            table[key][terminal] = (key,production)
+                        else:
+                            table[key] = {terminal: (key,production)}
+
+                if epsilon in first_value:
+                    for terminal in self.follow(key):
+                        if terminal in self.grammar.get_terminals() or terminal == '$':
+                            if key in table.keys():
+                                if terminal in table[key].keys():
+                                    raise Exception("grammar not suitable")
+                                table[key][terminal] = (key,production)
+                            else:
+                                table[key] = {terminal: (key,production)}
+        return table
+            
+
         
 
 if __name__ == "__main__":    
         
     grammar = Grammar()
-    grammar.from_file("Lab5/g4.txt")
-    '''
-        S A C B
-        b a g h d
-        S
-        S->A C B
-        S->C b b
-        S->B a
-        A->d a
-        A->B C
-        B->g
-        B->Є
-        C->h
-        C->Є
-    '''
+    grammar.from_file("Lab5/g5.txt")
+
     parser = Parser(grammar)
-    assert sorted(parser.first('S')) == sorted(['a','b','d','g','h',epsilon])
-    assert sorted(parser.first('A')) == sorted(['d','g','h',epsilon])
-    assert sorted(parser.first('B')) == sorted(['g',epsilon])
-    assert sorted(parser.first('C')) == sorted(['h',epsilon])
 
-    assert sorted(parser.follow('S')) == sorted(['$'])
-    assert sorted(parser.follow('A')) == sorted(['h','g','$'])
-    assert sorted(parser.follow('B')) == sorted(['a','h','g','$'])
-    assert sorted(parser.follow('C')) == sorted(['b','h','g','$'])
-
+    table = parser.get_table()
+    for key in table:
+        print(str(key) + " " + str(table[key]))
     
     
     
