@@ -50,10 +50,36 @@ class Parser:
                 to_return.extend(self.follow(production[0]))
         return list(set(to_return))
         
-            
+
+if __name__ == "__main__":    
         
-grammar = Grammar()
-grammar.from_file("Lab5/g4.txt")
-print(grammar)
-parser = Parser(grammar)
-print(parser.follow('C'))
+    grammar = Grammar()
+    grammar.from_file("Lab5/g4.txt")
+    '''
+        S A C B
+        b a g h d
+        S
+        S->A C B
+        S->C b b
+        S->B a
+        A->d a
+        A->B C
+        B->g
+        B->Є
+        C->h
+        C->Є
+    '''
+    parser = Parser(grammar)
+    assert sorted(parser.first('S')) == sorted(['a','b','d','g','h',epsilon])
+    assert sorted(parser.first('A')) == sorted(['d','g','h',epsilon])
+    assert sorted(parser.first('B')) == sorted(['g',epsilon])
+    assert sorted(parser.first('C')) == sorted(['h',epsilon])
+
+    assert sorted(parser.follow('S')) == sorted(['$'])
+    assert sorted(parser.follow('A')) == sorted(['h','g','$'])
+    assert sorted(parser.follow('B')) == sorted(['a','h','g','$'])
+    assert sorted(parser.follow('C')) == sorted(['b','h','g','$'])
+
+    
+    
+    
