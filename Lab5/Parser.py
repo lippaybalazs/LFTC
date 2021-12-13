@@ -91,7 +91,36 @@ class Parser:
                                 table[key] = {terminal: (key,production)}
         return table
             
+    def parse(self, input_string) -> bool:
+        out = []
+        stack = [self.grammar.starting_symbol]
+        input_list = list(input_string)
+        try:
+            parsing_table = self.get_table()
+            while (len(stack) > 0):
+                A = stack[-1]
+                if A in self.grammar.terminals or A == "$":
+                    if A == input_list[0]:
+                        stack.pop()
+                        input_list.pop(0)
+                    else:
+                        return False
 
+                elif A in self.grammar.non_terminals:
+                    try:
+                        production = parsing_table[A][input_list[0]]
+                        out.append(production)
+                        stack.pop()
+                        for symbol in reversed(production[1].split()):
+                            stack.append(symbol)
+
+                    except:  # not found in parsing table
+                        return False
+
+            return out
+
+        except Exception as e:
+            print(str(e))
         
 
 if __name__ == "__main__":    
@@ -100,7 +129,6 @@ if __name__ == "__main__":
     grammar.from_file("Lab5/g5.txt")
 
     parser = Parser(grammar)
-
     table = parser.get_table()
     for key in table:
         print(str(key) + " " + str(table[key]))
