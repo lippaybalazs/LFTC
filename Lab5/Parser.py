@@ -63,7 +63,8 @@ class Parser:
                     to_return.extend(self.follow(production[0]))
                 to_return.extend(first_next)
             else:
-                to_return.extend(self.follow(production[0]))
+                if x != production[0]:
+                    to_return.extend(self.follow(production[0]))
         return list(set(to_return))
 
     def get_table(self):
@@ -94,19 +95,24 @@ class Parser:
     def parse(self, input_string) -> bool:
         out = []
         stack = [self.grammar.starting_symbol]
-        input_list = list(input_string)
+        input_list = input_string.split(" ")
         try:
             parsing_table = self.get_table()
             while (len(stack) > 0):
                 A = stack[-1]
-                if A in self.grammar.terminals or A == "$":
+                if A in self.grammar.get_terminals() or A == "$":
                     if A == input_list[0]:
                         stack.pop()
                         input_list.pop(0)
                     else:
-                        return False
+                        if A == epsilon:
+                            stack.pop()
+                        else:
+                            return False
 
                 elif A in self.grammar.non_terminals:
+                    if len(input_list) == 0:
+                        input_list.append(epsilon)
                     try:
                         production = parsing_table[A][input_list[0]]
                         out.append(production)
@@ -126,12 +132,22 @@ class Parser:
 if __name__ == "__main__":    
         
     grammar = Grammar()
-    grammar.from_file("Lab5/g5.txt")
+    grammar.from_file("Lab5/g1.txt")
 
     parser = Parser(grammar)
-    table = parser.get_table()
-    for key in table:
-        print(str(key) + " " + str(table[key]))
+
     
-    
-    
+    print()
+    print(parser.first('S'))
+    print(parser.first('A'))
+    print(parser.first('B'))
+    print(parser.first('C'))
+    print(parser.first('D'))
+    print()
+    print(parser.follow('S'))
+    print(parser.follow('A'))
+    print(parser.follow('B'))
+    print(parser.follow('C'))
+    print(parser.follow('D'))
+
+    print(parser.parse('a * a + a'))

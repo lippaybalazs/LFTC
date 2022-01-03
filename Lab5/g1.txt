@@ -1,10 +1,11 @@
-S A B C
-( ) + * int
+S B A D C
++ * ( ) a
 S
-S->A B
-A->( S )
-A->int C
-B->+ S
-B->E
-C->* A
-C->E
+S->B A
+A->+ B A
+A->Є
+B->D C
+C->* D C
+C->Є
+D->( S )
+D->a

@@ -1,0 +1,59 @@
+Parser: LL(1)
+
+class Parser
+{
+    __init__ ( Grammar )
+        - initializes the class
+
+    first ( string )
+        - returns FIRST(string)
+
+    follow ( char )
+        - returns FOLLOW(char)
+
+    get_table ( )
+        - generates and returns the parsing table of the grammar
+
+    parse ( string )
+        - parses the string, returns False if it fails, parsing sequence in case it matches
+}
+
+Example:
+    Input:
+        S B A D C
+        + * ( ) a
+        S
+        S->B A
+        A->+ B A
+        A->Є
+        B->D C
+        C->* D C
+        C->Є
+        D->( S )
+        D->a
+
+    FIRST(S) = ['(', 'a']
+    FIRST(A) = ['Є', '+']
+    FIRST(B) = ['(', 'a']
+    FIRST(C) = ['*', 'Є']
+    FIRST(D) = ['(', 'a']
+
+    FOLLOW(S) = [')', '$']
+    FOLLOW(A) = [')', '$']
+    FOLLOW(B) = [')', '+', '$']
+    FOLLOW(C) = [')', '+', '$']
+    FOLLOW(D) = ['*', ')', '+', '$']
+
+    PARSE('a * a + a') = [
+        ('S', 'B A'), 
+        ('B', 'D C'), 
+        ('D', 'a'), 
+        ('C', '* D C'), 
+        ('D', 'a'), 
+        ('C', 'Є'), 
+        ('A', '+ B A'), 
+        ('B', 'D C'), 
+        ('D', 'a'), 
+        ('C', 'Є'), 
+        ('A', 'Є')
+    ]

@@ -1,3 +1,5 @@
+epsilon = "Є"
+
 class Grammar:
 
     def __init__(self, non_terminals=None, terminals=None, productions=None, starting_symbol=None):
@@ -42,7 +44,7 @@ class Grammar:
         return True
 
     def get_terminals(self):
-        return self.terminals
+        return self.terminals + [epsilon]
 
     def __str__(self):
         return "nonterminals: " + str(self.non_terminals) + "\n" + \
@@ -53,6 +55,6 @@ class Grammar:
 
 if __name__ == "__main__":
     g = Grammar()
-    g.from_file("Lab5/g4.txt")
+    g.from_file("Lab5/g1.txt")
     print(g)
     print(g.get_productions_of('B'))
