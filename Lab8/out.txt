@@ -1,0 +1,79 @@
+Reserved: print
+Separator: (
+A string constant: "minimum of 3"
+Separator: )
+An identifier: a
+Reserved: :
+Reserved: int
+Separator:  
+Assignment Operator: =
+Separator:  
+Reserved: int
+Separator: (
+Reserved: input
+Separator: (
+Separator: )
+Separator: )
+An identifier: b
+Reserved: :
+Reserved: int
+Separator:  
+Assignment Operator: =
+Separator:  
+Reserved: int
+Separator: (
+Reserved: input
+Separator: (
+Separator: )
+Separator: )
+An identifier: c
+Reserved: :
+Reserved: int
+Separator:  
+Assignment Operator: =
+Separator:  
+Reserved: int
+Separator: (
+Reserved: input
+Separator: (
+Separator: )
+Separator: )
+An identifier: m
+Reserved: :
+Reserved: int
+Separator:  
+Assignment Operator: =
+Separator:  
+An identifier: a
+Reserved: if
+Separator:  
+An identifier: b
+Separator:  
+Comparison Operator: <
+Separator:  
+An identifier: m
+Separator:  
+Reserved: :
+An identifier: m
+Separator:  
+Assignment Operator: =
+Separator:  
+An identifier: b
+Reserved: if
+Separator:  
+An identifier: c
+Separator:  
+Comparison Operator: <
+Separator:  
+An identifier: m
+Separator:  
+Reserved: :
+An identifier: m
+Separator:  
+Assignment Operator: =
+Separator:  
+An identifier: c
+Reserved: print
+Separator: (
+An identifier: m
+Separator: )

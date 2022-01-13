@@ -1,0 +1,64 @@
+%{ 	
+#include <math.h>
+%}
+%option noyywrap
+IDENTIFIER  [a-zA-Z]+[a-zA-z0-9]*
+INT         [1-9][0-9]+$|^[0-9]
+STR         \".*\"
+
+%%
+
+"+="    printf("Arithmetic Operator: %s\n", yytext);
+"-="    printf("Arithmetic Operator: %s\n", yytext);
+"*="    printf("Arithmetic Operator: %s\n", yytext);
+"/="    printf("Arithmetic Operator: %s\n", yytext);
+"%="    printf("Arithmetic Operator: %s\n", yytext);
+"="     printf("Assignment Operator: %s\n", yytext);
+"<"     printf("Comparison Operator: %s\n", yytext);
+">"     printf("Comparison Operator: %s\n", yytext);
+"=="    printf("Comparison Operator: %s\n", yytext);
+"<="    printf("Comparison Operator: %s\n", yytext);
+">="    printf("Comparison Operator: %s\n", yytext);
+"and"   printf("Logical Operator: %s\n", yytext);
+"or"    printf("Logical Operator: %s\n", yytext);
+"not"   printf("Logical Operator: %s\n", yytext);
+
+"["     printf("Separator: %s\n", yytext);
+"]"     printf("Separator: %s\n", yytext);
+"{"     printf("Separator: %s\n", yytext);
+"}"     printf("Separator: %s\n", yytext);
+"("     printf("Separator: %s\n", yytext);
+")"     printf("Separator: %s\n", yytext);
+" "     printf("Separator: %s\n", yytext);
+
+"if"    printf("Reserved: %s\n", yytext);
+"else"  printf("Reserved: %s\n", yytext);
+"while" printf("Reserved: %s\n", yytext);
+"int"   printf("Reserved: %s\n", yytext);
+"List"  printf("Reserved: %s\n", yytext);
+"str"   printf("Reserved: %s\n", yytext);
+"print" printf("Reserved: %s\n", yytext);
+"input()" printf("Reserved: %s\n", yytext);
+":"     printf("Reserved: %s\n", yytext);
+
+{INT} 	        printf( "An integer constant: %s (%d)\n", yytext, atoi( yytext ) );
+{STR}           printf( "A string constant: %s\n", yytext);
+{IDENTIFIER}    printf( "An identifier: %s\n", yytext );
+
+"{"[^}\n]*"}" 		/* eat up one-line comments */
+
+[ \t\n]+ 		/* eat up whitespace */
+		
+. printf("Error\n");
+%%
+int main( argc, argv )
+int argc;
+char **argv;
+{
+    ++argv, --argc; /* skip over program name */
+    if ( argc > 0 )
+    yyin = fopen( argv[0], "r" );
+    else
+     yyin = stdin;
+    yylex();
+}

@@ -1,0 +1,1068 @@
+Rules useless in parser due to conflicts
+
+   33 ifstmt: IF condition ':' '\n' compstmt
+   34       | IF condition ':' '\n' compstmt ELSE ':' '\n' compstmt
+
+   35 whilestmt: WHILE condition ':' '\n' compstmt
+
+
+State 56 conflicts: 1 reduce/reduce
+State 70 conflicts: 1 reduce/reduce
+State 74 conflicts: 1 reduce/reduce
+State 75 conflicts: 1 reduce/reduce
+State 81 conflicts: 1 reduce/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: compstmt
+
+    2 compstmt: stmt '\n'
+    3         | stmt '\n' compstmt
+
+    4 stmt: simplstmt
+    5     | structstmt
+
+    6 simplstmt: assignstmt
+    7          | declstmt
+    8          | printstmt
+    9          | arithmstmt
+
+   10 arithmstmt: IDENTIFIER ARITMETIC_OPERATOR expression
+
+   11 printstmt: PRINT '(' expression ')'
+
+   12 declstmt: IDENTIFIER ':' type '=' expression
+
+   13 assignstmt: IDENTIFIER '=' expression
+
+   14 type: INT
+   15     | STR
+   16     | LIST
+
+   17 expression: conversionexpression
+   18           | readexpression
+   19           | listexpression
+   20           | constantexpression
+   21           | IDENTIFIER
+
+   22 listexpression: '[' listmiddle ']'
+
+   23 listmiddle: expression
+   24           | expression ',' listmiddle
+
+   25 readexpression: INPUT
+
+   26 conversionexpression: INT '(' expression ')'
+   27                     | STR '(' expression ')'
+
+   28 constantexpression: CONSTANT_INT
+   29                   | CONSTANT_STR
+
+   30 structstmt: compstmt
+   31           | whilestmt
+   32           | ifstmt
+
+   33 ifstmt: IF condition ':' '\n' compstmt
+   34       | IF condition ':' '\n' compstmt ELSE ':' '\n' compstmt
+
+   35 whilestmt: WHILE condition ':' '\n' compstmt
+
+   36 logicalexpression: NOT expression COMPARISON_OPERATOR expression
+   37                  | expression COMPARISON_OPERATOR expression
+
+   38 condition: logicalexpression
+   39          | NOT logicalexpression
+   40          | logicalexpression LOGICAL_OPERATOR condition
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '\n' (10) 2 3 33 34 35
+    '(' (40) 11 26 27
+    ')' (41) 11 26 27
+    ',' (44) 24
+    ':' (58) 12 33 34 35
+    '=' (61) 12 13
+    '[' (91) 22
+    ']' (93) 22
+    error (256)
+    ARITMETIC_OPERATOR (258) 10
+    COMPARISON_OPERATOR (259) 36 37
+    LOGICAL_OPERATOR (260) 40
+    NOT (261) 36 39
+    IF (262) 33 34
+    ELSE (263) 34
+    WHILE (264) 35
+    INT (265) 14 26
+    LIST (266) 16
+    STR (267) 15 27
+    PRINT (268) 11
+    INPUT (269) 25
+    CONSTANT_INT (270) 28
+    CONSTANT_STR (271) 29
+    IDENTIFIER (272) 10 12 13 21
+
+
+Nonterminals, with rules where they appear
+
+    $accept (26)
+        on left: 0
+    program (27)
+        on left: 1
+        on right: 0
+    compstmt (28)
+        on left: 2 3
+        on right: 1 3 30 33 34 35
+    stmt (29)
+        on left: 4 5
+        on right: 2 3
+    simplstmt (30)
+        on left: 6 7 8 9
+        on right: 4
+    arithmstmt (31)
+        on left: 10
+        on right: 9
+    printstmt (32)
+        on left: 11
+        on right: 8
+    declstmt (33)
+        on left: 12
+        on right: 7
+    assignstmt (34)
+        on left: 13
+        on right: 6
+    type (35)
+        on left: 14 15 16
+        on right: 12
+    expression (36)
+        on left: 17 18 19 20 21
+        on right: 10 11 12 13 23 24 26 27 36 37
+    listexpression (37)
+        on left: 22
+        on right: 19
+    listmiddle (38)
+        on left: 23 24
+        on right: 22 24
+    readexpression (39)
+        on left: 25
+        on right: 18
+    conversionexpression (40)
+        on left: 26 27
+        on right: 17
+    constantexpression (41)
+        on left: 28 29
+        on right: 20
+    structstmt (42)
+        on left: 30 31 32
+        on right: 5
+    ifstmt (43)
+        on left: 33 34
+        on right: 32
+    whilestmt (44)
+        on left: 35
+        on right: 31
+    logicalexpression (45)
+        on left: 36 37
+        on right: 38 39 40
+    condition (46)
+        on left: 38 39 40
+        on right: 33 34 35 40
+
+
+State 0
+
+    0 $accept: . program $end
+
+    IF          shift, and go to state 1
+    WHILE       shift, and go to state 2
+    PRINT       shift, and go to state 3
+    IDENTIFIER  shift, and go to state 4
+
+    program     go to state 5
+    compstmt    go to state 6
+    stmt        go to state 7
+    simplstmt   go to state 8
+    arithmstmt  go to state 9
+    printstmt   go to state 10
+    declstmt    go to state 11
+    assignstmt  go to state 12
+    structstmt  go to state 13
+    ifstmt      go to state 14
+    whilestmt   go to state 15
+
+
+State 1
+
+   33 ifstmt: IF . condition ':' '\n' compstmt
+   34       | IF . condition ':' '\n' compstmt ELSE ':' '\n' compstmt
+
+    NOT           shift, and go to state 16
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 24
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+    logicalexpression     go to state 29
+    condition             go to state 30
+
+
+State 2
+
+   35 whilestmt: WHILE . condition ':' '\n' compstmt
+
+    NOT           shift, and go to state 16
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 24
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+    logicalexpression     go to state 29
+    condition             go to state 31
+
+
+State 3
+
+   11 printstmt: PRINT . '(' expression ')'
+
+    '('  shift, and go to state 32
+
+
+State 4
+
+   10 arithmstmt: IDENTIFIER . ARITMETIC_OPERATOR expression
+   12 declstmt: IDENTIFIER . ':' type '=' expression
+   13 assignstmt: IDENTIFIER . '=' expression
+
+    ARITMETIC_OPERATOR  shift, and go to state 33
+    ':'                 shift, and go to state 34
+    '='                 shift, and go to state 35
+
+
+State 5
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 36
+
+
+State 6
+
+    1 program: compstmt .
+   30 structstmt: compstmt .
+
+    '\n'      reduce using rule 30 (structstmt)
+    $default  reduce using rule 1 (program)
+
+
+State 7
+
+    2 compstmt: stmt . '\n'
+    3         | stmt . '\n' compstmt
+
+    '\n'  shift, and go to state 37
+
+
+State 8
+
+    4 stmt: simplstmt .
+
+    $default  reduce using rule 4 (stmt)
+
+
+State 9
+
+    9 simplstmt: arithmstmt .
+
+    $default  reduce using rule 9 (simplstmt)
+
+
+State 10
+
+    8 simplstmt: printstmt .
+
+    $default  reduce using rule 8 (simplstmt)
+
+
+State 11
+
+    7 simplstmt: declstmt .
+
+    $default  reduce using rule 7 (simplstmt)
+
+
+State 12
+
+    6 simplstmt: assignstmt .
+
+    $default  reduce using rule 6 (simplstmt)
+
+
+State 13
+
+    5 stmt: structstmt .
+
+    $default  reduce using rule 5 (stmt)
+
+
+State 14
+
+   32 structstmt: ifstmt .
+
+    $default  reduce using rule 32 (structstmt)
+
+
+State 15
+
+   31 structstmt: whilestmt .
+
+    $default  reduce using rule 31 (structstmt)
+
+
+State 16
+
+   36 logicalexpression: NOT . expression COMPARISON_OPERATOR expression
+   39 condition: NOT . logicalexpression
+
+    NOT           shift, and go to state 38
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 39
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+    logicalexpression     go to state 40
+
+
+State 17
+
+   26 conversionexpression: INT . '(' expression ')'
+
+    '('  shift, and go to state 41
+
+
+State 18
+
+   27 conversionexpression: STR . '(' expression ')'
+
+    '('  shift, and go to state 42
+
+
+State 19
+
+   25 readexpression: INPUT .
+
+    $default  reduce using rule 25 (readexpression)
+
+
+State 20
+
+   28 constantexpression: CONSTANT_INT .
+
+    $default  reduce using rule 28 (constantexpression)
+
+
+State 21
+
+   29 constantexpression: CONSTANT_STR .
+
+    $default  reduce using rule 29 (constantexpression)
+
+
+State 22
+
+   21 expression: IDENTIFIER .
+
+    $default  reduce using rule 21 (expression)
+
+
+State 23
+
+   22 listexpression: '[' . listmiddle ']'
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 43
+    listexpression        go to state 25
+    listmiddle            go to state 44
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 24
+
+   37 logicalexpression: expression . COMPARISON_OPERATOR expression
+
+    COMPARISON_OPERATOR  shift, and go to state 45
+
+
+State 25
+
+   19 expression: listexpression .
+
+    $default  reduce using rule 19 (expression)
+
+
+State 26
+
+   18 expression: readexpression .
+
+    $default  reduce using rule 18 (expression)
+
+
+State 27
+
+   17 expression: conversionexpression .
+
+    $default  reduce using rule 17 (expression)
+
+
+State 28
+
+   20 expression: constantexpression .
+
+    $default  reduce using rule 20 (expression)
+
+
+State 29
+
+   38 condition: logicalexpression .
+   40          | logicalexpression . LOGICAL_OPERATOR condition
+
+    LOGICAL_OPERATOR  shift, and go to state 46
+
+    $default  reduce using rule 38 (condition)
+
+
+State 30
+
+   33 ifstmt: IF condition . ':' '\n' compstmt
+   34       | IF condition . ':' '\n' compstmt ELSE ':' '\n' compstmt
+
+    ':'  shift, and go to state 47
+
+
+State 31
+
+   35 whilestmt: WHILE condition . ':' '\n' compstmt
+
+    ':'  shift, and go to state 48
+
+
+State 32
+
+   11 printstmt: PRINT '(' . expression ')'
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 49
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 33
+
+   10 arithmstmt: IDENTIFIER ARITMETIC_OPERATOR . expression
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 50
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 34
+
+   12 declstmt: IDENTIFIER ':' . type '=' expression
+
+    INT   shift, and go to state 51
+    LIST  shift, and go to state 52
+    STR   shift, and go to state 53
+
+    type  go to state 54
+
+
+State 35
+
+   13 assignstmt: IDENTIFIER '=' . expression
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 55
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 36
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 37
+
+    2 compstmt: stmt '\n' .
+    3         | stmt '\n' . compstmt
+
+    IF          shift, and go to state 1
+    WHILE       shift, and go to state 2
+    PRINT       shift, and go to state 3
+    IDENTIFIER  shift, and go to state 4
+
+    $default  reduce using rule 2 (compstmt)
+
+    compstmt    go to state 56
+    stmt        go to state 7
+    simplstmt   go to state 8
+    arithmstmt  go to state 9
+    printstmt   go to state 10
+    declstmt    go to state 11
+    assignstmt  go to state 12
+    structstmt  go to state 13
+    ifstmt      go to state 14
+    whilestmt   go to state 15
+
+
+State 38
+
+   36 logicalexpression: NOT . expression COMPARISON_OPERATOR expression
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 57
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 39
+
+   36 logicalexpression: NOT expression . COMPARISON_OPERATOR expression
+   37                  | expression . COMPARISON_OPERATOR expression
+
+    COMPARISON_OPERATOR  shift, and go to state 58
+
+
+State 40
+
+   39 condition: NOT logicalexpression .
+
+    $default  reduce using rule 39 (condition)
+
+
+State 41
+
+   26 conversionexpression: INT '(' . expression ')'
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 59
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 42
+
+   27 conversionexpression: STR '(' . expression ')'
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 60
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 43
+
+   23 listmiddle: expression .
+   24           | expression . ',' listmiddle
+
+    ','  shift, and go to state 61
+
+    $default  reduce using rule 23 (listmiddle)
+
+
+State 44
+
+   22 listexpression: '[' listmiddle . ']'
+
+    ']'  shift, and go to state 62
+
+
+State 45
+
+   37 logicalexpression: expression COMPARISON_OPERATOR . expression
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 63
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 46
+
+   40 condition: logicalexpression LOGICAL_OPERATOR . condition
+
+    NOT           shift, and go to state 16
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 24
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+    logicalexpression     go to state 29
+    condition             go to state 64
+
+
+State 47
+
+   33 ifstmt: IF condition ':' . '\n' compstmt
+   34       | IF condition ':' . '\n' compstmt ELSE ':' '\n' compstmt
+
+    '\n'  shift, and go to state 65
+
+
+State 48
+
+   35 whilestmt: WHILE condition ':' . '\n' compstmt
+
+    '\n'  shift, and go to state 66
+
+
+State 49
+
+   11 printstmt: PRINT '(' expression . ')'
+
+    ')'  shift, and go to state 67
+
+
+State 50
+
+   10 arithmstmt: IDENTIFIER ARITMETIC_OPERATOR expression .
+
+    $default  reduce using rule 10 (arithmstmt)
+
+
+State 51
+
+   14 type: INT .
+
+    $default  reduce using rule 14 (type)
+
+
+State 52
+
+   16 type: LIST .
+
+    $default  reduce using rule 16 (type)
+
+
+State 53
+
+   15 type: STR .
+
+    $default  reduce using rule 15 (type)
+
+
+State 54
+
+   12 declstmt: IDENTIFIER ':' type . '=' expression
+
+    '='  shift, and go to state 68
+
+
+State 55
+
+   13 assignstmt: IDENTIFIER '=' expression .
+
+    $default  reduce using rule 13 (assignstmt)
+
+
+State 56
+
+    3 compstmt: stmt '\n' compstmt .
+   30 structstmt: compstmt .
+
+    '\n'      reduce using rule 3 (compstmt)
+    '\n'      [reduce using rule 30 (structstmt)]
+    $default  reduce using rule 3 (compstmt)
+
+
+State 57
+
+   36 logicalexpression: NOT expression . COMPARISON_OPERATOR expression
+
+    COMPARISON_OPERATOR  shift, and go to state 69
+
+
+State 58
+
+   36 logicalexpression: NOT expression COMPARISON_OPERATOR . expression
+   37                  | expression COMPARISON_OPERATOR . expression
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 70
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 59
+
+   26 conversionexpression: INT '(' expression . ')'
+
+    ')'  shift, and go to state 71
+
+
+State 60
+
+   27 conversionexpression: STR '(' expression . ')'
+
+    ')'  shift, and go to state 72
+
+
+State 61
+
+   24 listmiddle: expression ',' . listmiddle
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 43
+    listexpression        go to state 25
+    listmiddle            go to state 73
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 62
+
+   22 listexpression: '[' listmiddle ']' .
+
+    $default  reduce using rule 22 (listexpression)
+
+
+State 63
+
+   37 logicalexpression: expression COMPARISON_OPERATOR expression .
+
+    $default  reduce using rule 37 (logicalexpression)
+
+
+State 64
+
+   40 condition: logicalexpression LOGICAL_OPERATOR condition .
+
+    $default  reduce using rule 40 (condition)
+
+
+State 65
+
+   33 ifstmt: IF condition ':' '\n' . compstmt
+   34       | IF condition ':' '\n' . compstmt ELSE ':' '\n' compstmt
+
+    IF          shift, and go to state 1
+    WHILE       shift, and go to state 2
+    PRINT       shift, and go to state 3
+    IDENTIFIER  shift, and go to state 4
+
+    compstmt    go to state 74
+    stmt        go to state 7
+    simplstmt   go to state 8
+    arithmstmt  go to state 9
+    printstmt   go to state 10
+    declstmt    go to state 11
+    assignstmt  go to state 12
+    structstmt  go to state 13
+    ifstmt      go to state 14
+    whilestmt   go to state 15
+
+
+State 66
+
+   35 whilestmt: WHILE condition ':' '\n' . compstmt
+
+    IF          shift, and go to state 1
+    WHILE       shift, and go to state 2
+    PRINT       shift, and go to state 3
+    IDENTIFIER  shift, and go to state 4
+
+    compstmt    go to state 75
+    stmt        go to state 7
+    simplstmt   go to state 8
+    arithmstmt  go to state 9
+    printstmt   go to state 10
+    declstmt    go to state 11
+    assignstmt  go to state 12
+    structstmt  go to state 13
+    ifstmt      go to state 14
+    whilestmt   go to state 15
+
+
+State 67
+
+   11 printstmt: PRINT '(' expression ')' .
+
+    $default  reduce using rule 11 (printstmt)
+
+
+State 68
+
+   12 declstmt: IDENTIFIER ':' type '=' . expression
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 76
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 69
+
+   36 logicalexpression: NOT expression COMPARISON_OPERATOR . expression
+
+    INT           shift, and go to state 17
+    STR           shift, and go to state 18
+    INPUT         shift, and go to state 19
+    CONSTANT_INT  shift, and go to state 20
+    CONSTANT_STR  shift, and go to state 21
+    IDENTIFIER    shift, and go to state 22
+    '['           shift, and go to state 23
+
+    expression            go to state 77
+    listexpression        go to state 25
+    readexpression        go to state 26
+    conversionexpression  go to state 27
+    constantexpression    go to state 28
+
+
+State 70
+
+   36 logicalexpression: NOT expression COMPARISON_OPERATOR expression .
+   37                  | expression COMPARISON_OPERATOR expression .
+
+    ':'       reduce using rule 36 (logicalexpression)
+    ':'       [reduce using rule 37 (logicalexpression)]
+    $default  reduce using rule 36 (logicalexpression)
+
+
+State 71
+
+   26 conversionexpression: INT '(' expression ')' .
+
+    $default  reduce using rule 26 (conversionexpression)
+
+
+State 72
+
+   27 conversionexpression: STR '(' expression ')' .
+
+    $default  reduce using rule 27 (conversionexpression)
+
+
+State 73
+
+   24 listmiddle: expression ',' listmiddle .
+
+    $default  reduce using rule 24 (listmiddle)
+
+
+State 74
+
+   30 structstmt: compstmt .
+   33 ifstmt: IF condition ':' '\n' compstmt .
+   34       | IF condition ':' '\n' compstmt . ELSE ':' '\n' compstmt
+
+    ELSE  shift, and go to state 78
+
+    '\n'      reduce using rule 30 (structstmt)
+    '\n'      [reduce using rule 33 (ifstmt)]
+    $default  reduce using rule 30 (structstmt)
+
+
+State 75
+
+   30 structstmt: compstmt .
+   35 whilestmt: WHILE condition ':' '\n' compstmt .
+
+    '\n'      reduce using rule 30 (structstmt)
+    '\n'      [reduce using rule 35 (whilestmt)]
+    $default  reduce using rule 30 (structstmt)
+
+
+State 76
+
+   12 declstmt: IDENTIFIER ':' type '=' expression .
+
+    $default  reduce using rule 12 (declstmt)
+
+
+State 77
+
+   36 logicalexpression: NOT expression COMPARISON_OPERATOR expression .
+
+    $default  reduce using rule 36 (logicalexpression)
+
+
+State 78
+
+   34 ifstmt: IF condition ':' '\n' compstmt ELSE . ':' '\n' compstmt
+
+    ':'  shift, and go to state 79
+
+
+State 79
+
+   34 ifstmt: IF condition ':' '\n' compstmt ELSE ':' . '\n' compstmt
+
+    '\n'  shift, and go to state 80
+
+
+State 80
+
+   34 ifstmt: IF condition ':' '\n' compstmt ELSE ':' '\n' . compstmt
+
+    IF          shift, and go to state 1
+    WHILE       shift, and go to state 2
+    PRINT       shift, and go to state 3
+    IDENTIFIER  shift, and go to state 4
+
+    compstmt    go to state 81
+    stmt        go to state 7
+    simplstmt   go to state 8
+    arithmstmt  go to state 9
+    printstmt   go to state 10
+    declstmt    go to state 11
+    assignstmt  go to state 12
+    structstmt  go to state 13
+    ifstmt      go to state 14
+    whilestmt   go to state 15
+
+
+State 81
+
+   30 structstmt: compstmt .
+   34 ifstmt: IF condition ':' '\n' compstmt ELSE ':' '\n' compstmt .
+
+    '\n'      reduce using rule 30 (structstmt)
+    '\n'      [reduce using rule 34 (ifstmt)]
+    $default  reduce using rule 30 (structstmt)
